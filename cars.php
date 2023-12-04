@@ -56,13 +56,22 @@ $makers = getMakers($csvData);
 
 print_r($makers);
 
-
+$errors = [];
 
 foreach ($makers as $maker) {
-    $mysqli->query("INSERT INTO cars (name) VALUES ($maker)");
+    $result = createMaker($mysqli, $maker);
+    //$mysqli->query("INSERT INTO cars (name) VALUES ($maker)");
+    if (!$result) {
+        $errors[] = $maker;
+    }
     echo "$maker\n";
 }
 
+$makers = getAllMakers($mysqli);
+$cnt = count($makers);
+echo "$cnt sor van;\n"; 
+echo $cnt . "sor van\n";
+echo sprintf("%d sor van\n",$cnt);
 
 $mysqli->close();
 
