@@ -17,7 +17,7 @@ class MakersDbTools{
         $this->mysqli->close();
     }
 
-    function createMaker($mysqli,$maker)
+    function createMaker($maker)
     {
         $result = $this->query("INSERT INTO makers (name) VALUES ('$maker')");
         if(!$result){
@@ -27,7 +27,7 @@ class MakersDbTools{
         return $result;
     }
 
-    function getAllMakers($mysqli)
+    function getAllMakers()
     {
         $result = $mysqli->query("SELECT * FROM maker");
         $makers = $result->fetch_all(MYSQLI_ASSOC);
@@ -36,14 +36,14 @@ class MakersDbTools{
         return $makers;
     }
 
-        function delMaker($mysqli,$id) 
+        function delMaker($id) 
     {
         $result = $mysqli->query("DELETE makers WHERE id=$id");
 
         return $result;
     }
 
-    function getMakerByName($mysqli, $name)
+    function getMakerByName($name)
     {
         $result = $mysqli->query("SELECT * FROM makers WHERE name=$name");
         $maker = $result->fetch_assoc();
@@ -51,7 +51,7 @@ class MakersDbTools{
         return $maker;
     }
 
-        function getMaker($myqli, $id)
+        function getMaker($id)
     {
         $result = $mysqli->query("SELECT * FROM makers WHERE id=$id");
         $maker = $result->fetch_assoc();
@@ -60,7 +60,7 @@ class MakersDbTools{
         return $maker;
     }
 
-    function updateMaker($mysqli,$data)
+    function updateMaker($data)
     {
         $makerName = $data['name'];
         $result = $mysqli->query("UPDATE makers SET name=$makerName");
