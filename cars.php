@@ -1,6 +1,8 @@
 <?php
 
 require_once('csv-tools.php');
+require_once('db-tools.php');
+require_once('MakersDbTool.php');
 ini_set('memory_limit', '-1');
 
 $filename = "car-db.csv";
@@ -73,8 +75,8 @@ $cnt = count($allMakers);
 echo "$cnt sor van;\n"; 
 echo $cnt . "sor van\n";
 echo sprintf("%d sor van\n",$cnt);
-
-$mysqli->close();
+print_r($allMakers);
+//$mysqli->close();
 
 
 ?>

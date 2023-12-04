@@ -38,13 +38,15 @@ function getMakers($csvData)
         }
         if ($maker != $data[$idxMaker]) {
             $maker = $data[$idxMaker];
+            $result[] = $maker;
         }
-        if ($model != $data[$idxModel]) {
+        /*if ($model != $data[$idxModel]) {
             $model = $data[$idxModel];
             $result[$maker][] = $model;
-        }
+        }*/
     }
-    print_r($result);   
+    return $result;
+    //print_r($result);   
 }
 
 
