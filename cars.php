@@ -51,6 +51,7 @@ if ($mysqli->connect_errno) {
 
 echo "connected\n";
 
+$makerDbTool = new MakersDbTools();
 
 $makers = getMakers($csvData);
 
@@ -59,7 +60,7 @@ print_r($makers);
 $errors = [];
 
 foreach ($makers as $maker) {
-    $result = createMaker($mysqli, $maker);
+    $result = $makerDbTool->createMaker($maker);
     //$mysqli->query("INSERT INTO cars (name) VALUES ($maker)");
     if (!$result) {
         $errors[] = $maker;
@@ -67,8 +68,8 @@ foreach ($makers as $maker) {
     echo "$maker\n";
 }
 
-$makers = getAllMakers($mysqli);
-$cnt = count($makers);
+$allMakers = $makerDbTool->getAllMakers();
+$cnt = count($allMakers);
 echo "$cnt sor van;\n"; 
 echo $cnt . "sor van\n";
 echo sprintf("%d sor van\n",$cnt);
