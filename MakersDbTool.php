@@ -21,7 +21,7 @@ class MakersDbTools{
 
     function createMaker($maker)
     {
-        $result = $this->mysqli->query("INSERT INTO makers (name) VALUES ('$maker')");
+        $result = $this->mysqli->query("INSERT INTO {self::DBTABLE} (name) VALUES ('$maker')");
         if(!$result){
             echo "Hiba történt a $maker beszúrása közben";
         }
@@ -31,7 +31,7 @@ class MakersDbTools{
 
     function getAllMakers()
     {
-        $result = $this->mysqli->query("SELECT * FROM makers");
+        $result = $this->mysqli->query("SELECT * FROM {self::DBTABLE}");
         $makers = $result->fetch_assoc();
         //$result->free_result();
 
@@ -40,14 +40,14 @@ class MakersDbTools{
 
         function delMaker($id) 
     {
-        $result = $mysqli->query("DELETE makers WHERE id=$id");
+        $result = $mysqli->query("DELETE {self::DBTABLE} WHERE id=$id");
 
         return $result;
     }
 
     function getMakerByName($name)
     {
-        $result = $mysqli->query("SELECT * FROM makers WHERE name=$name");
+        $result = $mysqli->query("SELECT * FROM {self::DBTABLE} WHERE name=$name");
         $maker = $result->fetch_assoc();
 
         return $maker;
@@ -55,7 +55,7 @@ class MakersDbTools{
 
         function getMaker($id)
     {
-        $result = $mysqli->query("SELECT * FROM makers WHERE id=$id");
+        $result = $mysqli->query("SELECT * FROM {self::DBTABLE} WHERE id=$id");
         $maker = $result->fetch_assoc();
         $result->free_result();
 
@@ -65,7 +65,7 @@ class MakersDbTools{
     function updateMaker($data)
     {
         $makerName = $data['name'];
-        $result = $mysqli->query("UPDATE makers SET name=$makerName");
+        $result = $mysqli->query("UPDATE {self::DBTABLE} SET name=$makerName");
 
         if (!$result){
             echo "Hiba történt a $makerName beszúrása közben";
