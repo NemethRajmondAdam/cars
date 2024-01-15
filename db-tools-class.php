@@ -1,77 +1,64 @@
 <?php
-class MakersDbTools{
-    const DBTABLE = 'makers';
+class MakerDbTools {
+const DBTABLE = 'makers';
 
     private $mysqli;
 
     function __construct($host = 'localhost', $user = 'root', $password = null, $db = 'cars')
     {
-        $this->mysqli = new mysqli($host, $user, $password, $db);
+        $this->mysqli = new mysqli($host,$user,$password,$db);
         if ($this->mysqli->connect_errno) {
-            throw new Exception($this->mysqli->connect_errno);
+            throw new Exeption($this->mysqli->connect_errno);
         }
     }
-
-    function __destruct()
-    {
+    function __destruct(){
         $this->mysqli->close();
     }
-
-    function createMaker($mysqli,$maker)
-    {
-        $result = $this->query("INSERT INTO makers (name) VALUES ('$maker')");
-        if(!$result){
+    function insertMakers($maker, $truncate = false){
+        if($truncate) {
+            $this->mysqli->query("TRUNCATE TABLE makers");
+        }
+        $result = $this->mysqli->query("INSERT INTO makers (name) VALUES ('$maker')");
+        if (!$result){
             echo "Hiba történt a $maker beszúrása közben";
         }
-
         return $result;
     }
-
-    function getAllMakers($mysqli)
-    {
-        $result = $mysqli->query("SELECT * FROM maker");
-        $makers = $result->fetch_all(MYSQLI_ASSOC);
-        $result->free_result();
-
-        return $makers;
-    }
-
-        function delMaker($mysqli,$id) 
-    {
-        $result = $mysqli->query("DELETE makers WHERE id=$id");
-
-        return $result;
-    }
-
-    function getMakerByName($mysqli, $name)
-    {
-        $result = $mysqli->query("SELECT * FROM makers WHERE name=$name");
-        $maker = $result->fetch_assoc();
-
-        return $maker;
-    }
-
-        function getMaker($myqli, $id)
-    {
-        $result = $mysqli->query("SELECT * FROM makers WHERE id=$id");
-        $maker = $result->fetch_assoc();
-        $result->free_result();
-
-        return $maker;
-    }
-
-    function updateMaker($mysqli,$data)
-    {
+    function updateMaker($data){
         $makerName = $data['name'];
-        $result = $mysqli->query("UPDATE makers SET name=$makerName");
-
+    
+        $result = $this->mysqli->query("UPDATE makers SET name=$makerName");
+    
         if (!$result){
             echo "Hiba történt a $makerName beszúrása közben";
-            return $result;
         }
-        $maker = getMakerByName($mysqli,$makerName);
+        $maker = getMakerByName($makerName);
+        return $result;
+    }
+    
+    function getMaker($id){
+        $result = $this->mysqli->query("SELECT * FROM makers WHERE id=$id");
+        $maker = $result->fetch_assoc();
+    
         return $maker;
     }
+    
+    function getMakerByName($name){
+        $result = $this->mysqli->query("SELECT * FROM makers WHERE name=$name");
+        $maker = $result->fetch_assoc();
+    
+        return $maker;
+    }
+    
+    function delMaker($id){
+        $result = $this->mysqli->query("DELETE makers WHERE id=$id");
+        return $result;
+    }
+    
+    function getAllMakers(){
+        $result = $this->mysqli->query("SELECT * FROM makers");
+        $makers = $result->fetch_assoc();
+    
+        return $makers;
+    }
 }
-
-?>

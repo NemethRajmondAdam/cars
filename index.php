@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAKERS</title>
+    <title>Autók</title>
+    <link rel="stylesheet" href="fontawesome\css\all.css" type="text/css">
 </head>
 <body>
     <nav>
+        <a href="index.php"><i class="fa fa-home" title="Kezdőlap"></i></a>
         <a href="makers.php"><button>Gyártók</button></a>
         <a href="models.php"><button>Modellek</button></a>
     </nav>

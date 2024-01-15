@@ -1,56 +1,62 @@
-<?php
-
-function getCsvData($filename) {
-    if (!file_exists($filename)) {
-        echo "$filename nem található";
-        return false;
-    }
-    $csvFile = fopen($filename, 'r');
-    $lines = [];
-    while (! feof($csvFile)) {
-        $line = fgetcsv($csvFile);
-        $lines[] = $line;
-    }
-    fclose($csvFile);
-
-    return $lines;
+<?php 
+function getCsvData($fileName) {
+	if (!file_exists($fileName)) {
+		echo "$fileName nem taláható";
+		return false;
+	}
+	$csvFile = fopen($fileName, 'r');
+    $lines = [];	
+	while (! feof($csvFile)) {
+		$line = fgetcsv($csvFile);
+		$lines[] = $line;
+	}
+	fclose($csvFile);
+	
+	return $lines;
 }
 
 function getMakers($csvData)
 {
-    $header = $csvData[0];
-    $idxMaker = array_search('make', $header);
-    //$idxModel = array_search('model', $header);
-
+    $idxMaker = array_search('make', $csvData[0]);
+    $makers = [];
     $isHeader = true;
-
-   // $result = [];
-    $maker = '';
-   // $model = '';
     foreach ($csvData as $data) {
         if (!is_array($data)) {
             continue;
         }
-        if ($isHeader) 
-        {
+        if ($isHeader) {
             $isHeader = false;
-            continue;    
+            continue;
         }
-        if ($maker != $data[$idxMaker]) {
-            $maker = $data[$idxMaker];
-            $result[] = $maker;
+
+        $maker = $data[$idxMaker];
+        if (!in_array($maker, $makers)) {
+            $makers[] = $maker;
         }
-        /*if ($model != $data[$idxModel]) {
-            $model = $data[$idxModel];
-            $result[$maker][] = $model;
-        }*/
     }
-    return $result;
-    //print_r($result);   
+
+    return $makers;
 }
 
+function getModels($csvData)
+{
+    $idxModel = array_search('model', $csvData[1]);
+    $models = [];
+    $isHeader = true;
+    foreach ($csvData as $data) {
+        if (!is_array($data)) {
+            continue;
+        }
+        if ($isHeader) {
+            $isHeader = false;
+            continue;
+        }
 
+        $model = $data[$idxModel];
+        if (!in_array($model, $models)) {
+            $models[] = $model;
+        }
+    }
 
-
-
-?>
+    return $models;
+}
